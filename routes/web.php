@@ -4,7 +4,7 @@ use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
-Route::get('/', fn () => redirect()->route('barang.index'));
+Route::get('/', fn() => redirect()->route('barang.index'));
 
 // ─── Auth Routes (Breeze) ─────────────────────────────────────────────────────
 require __DIR__ . '/auth.php';
@@ -13,8 +13,18 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Dashboard redirect
-    Route::get('/dashboard', fn () => redirect()->route('barang.index'))
+    Route::get('/dashboard', fn() => redirect()->route('barang.index'))
         ->name('dashboard');
+
+    Route::get('/about', function () {
+        $members = [
+            ['name' => 'Ananda Fathurrahmah Lubis',  'role' => 'Project Manager',    'NIRM' => '2023020427'],
+            ['name' => 'Master Juanda Sirait',   'role' => 'Fullstack Developer',  'NIRM' => '2023020414'],
+            ['name' => 'Muhammad Ridho',  'role' => 'UI UX', 'NIRM' => '2023020414'],
+        ];
+
+        return view('about', compact('members'));
+    })->name('about');
 
     // ── Barang CRUD ──────────────────────────────────────────────────────────
     Route::resource('barang', BarangController::class);
