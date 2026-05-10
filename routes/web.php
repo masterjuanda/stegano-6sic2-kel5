@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DwtController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
@@ -33,10 +34,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('barang/{barang}/download', [BarangController::class, 'download'])
         ->name('barang.download');
 
-    // ── Steganography ────────────────────────────────────────────────────────
+    // ── Steganography LSB────────────────────────────────────────────────────────
     Route::post('barang/{barang}/encode', [BarangController::class, 'encodeLSB'])
         ->name('barang.encode');
 
     Route::get('barang/{barang}/decode', [BarangController::class, 'decodeLSB'])
         ->name('barang.decode');
+
+    // ── Steganography DWT ────────────────────────────────────────────────────
+    Route::get('/dwt',                   [DwtController::class, 'index'])->name('dwt.index');
+    Route::post('/dwt/encode',           [DwtController::class, 'encode'])->name('dwt.encode');
+    Route::post('/dwt/{dwt}/decode',     [DwtController::class, 'decode'])->name('dwt.decode');
+    Route::get('/dwt/{dwt}/download',    [DwtController::class, 'download'])->name('dwt.download');
+    Route::delete('/dwt/{dwt}',          [DwtController::class, 'destroy'])->name('dwt.destroy');
 });
